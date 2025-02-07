@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.20348.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <Compile Remove="Tests_\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests_\**" />
+    <None Remove="Tests\**" />
+    <None Remove="Tests_\**" />
+    <Page Remove="Tests\**" />
+    <Page Remove="Tests_\**" />
+  </ItemGroup>
+
+</Project>
