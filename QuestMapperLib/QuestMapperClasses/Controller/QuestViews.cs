@@ -5,11 +5,33 @@ namespace QuestMapperLib.Controller
 {
     public class QuestViews
     {
+        private static QuestViews _instance = new QuestViews();
+        private static readonly object _lock = new object();
+
         private Dictionary<int, List<int>> _viewMapping;
 
-        public QuestViews()
+        private QuestViews()
         {
             _viewMapping = new Dictionary<int, List<int>>();
+        }
+
+        public static QuestViews Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    // Thread safe
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new QuestViews();
+                        }
+                    }
+                }
+                return _instance;
+            }
         }
 
         private int FindNextFreeId()

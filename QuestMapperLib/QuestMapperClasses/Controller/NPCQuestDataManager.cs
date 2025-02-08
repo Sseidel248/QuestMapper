@@ -6,18 +6,39 @@ namespace QuestMapperLib.Controller
 {
     public class NPCQuestDataManager
     {
+        private static NPCQuestDataManager _instance = new NPCQuestDataManager();
+        private static readonly object _lock = new object();
+
         private int _nextNpcId = 0;
         private Dictionary<int, INPC> _npcs;
         private int _nextQuestId = 0;
         private Dictionary<int, IQuest> _quests;
         private int _nextViewId = 0;
-        private QuestViews _questViews;
+        private QuestViews _questViews = QuestViews.Instance;
 
-        public NPCQuestDataManager()
+        private NPCQuestDataManager()
         {
             _npcs = new Dictionary<int, INPC>();
             _quests = new Dictionary<int, IQuest>();
-            _questViews = new QuestViews();
+        }
+
+        public static NPCQuestDataManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    // Thread safe
+                    lock (_lock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new NPCQuestDataManager();
+                        }
+                    }
+                }
+                return _instance;
+            }
         }
 
         private bool IsQuestValid(IQuest quest)
